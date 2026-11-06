@@ -137,6 +137,31 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--text);outline-offse
 .brands b{font-weight:400;transition:color .3s}
 .brands b:hover{color:var(--red)}
 
+/* Stats bay — film strips fill the empty page, numbers stay centered */
+.glance{position:relative;overflow:hidden}
+.glance.sec{padding-top:72px}
+.reel{height:clamp(108px,18vh,200px);overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.reel::after{content:"";position:absolute;left:0;right:0;height:46%;pointer-events:none;z-index:1}
+.reel-top::after{bottom:0;background:linear-gradient(180deg,transparent,var(--bg))}
+.reel-bot::after{top:0;background:linear-gradient(0deg,transparent,var(--bg))}
+.reel-track{display:flex;height:100%;width:max-content;animation:reel-move 46s linear infinite}
+.reel-bot .reel-track{animation-duration:56s;animation-direction:reverse}
+.reel-set{display:flex;gap:10px;height:100%;padding-right:10px}
+.reel-frame{height:100%;aspect-ratio:9/16;flex:none;overflow:hidden}
+.reel-frame img{width:100%;height:100%;object-fit:cover;filter:saturate(.72) brightness(.58)}
+.reel-play{position:absolute;top:0;bottom:0;width:2px;background:var(--red);box-shadow:0 0 18px var(--red);z-index:2;animation:head-move 8s ease-in-out infinite}
+.glance-core{position:relative;z-index:2}
+.glance-tl{display:flex;align-items:center;gap:16px;margin-top:28px}
+.rec{display:inline-flex;align-items:center;gap:8px;color:var(--red);letter-spacing:.14em}
+.rec i{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);animation:rec-blink 1.2s steps(1) infinite}
+.glance-line{position:relative;flex:1;height:1px;background:var(--line);overflow:hidden}
+.glance-line span{position:absolute;top:-1px;height:3px;width:18%;background:var(--red);animation:head-move 6.5s var(--ease) infinite}
+.glance-tc{color:var(--text);font-variant-numeric:tabular-nums}
+.glance .brands{margin-top:18px}
+@keyframes reel-move{to{transform:translateX(-50%)}}
+@keyframes head-move{0%{left:8%}50%{left:84%}100%{left:8%}}
+@keyframes rec-blink{50%{opacity:0}}
+
 /* ---------- Section heads ---------- */
 .sec-head{align-items:end;margin-bottom:96px}
 .h2{font-size:clamp(48px,6.7vw,96px)}
@@ -265,6 +290,45 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--text);outline-offse
 .slate-bar span{position:absolute;inset:0;background:var(--text);transform:scaleX(0);transform-origin:left}
 .no-slate .slate{display:none}
 
+/* ---------- Full-page section stops (desktop) ---------- */
+html.page-snap{scroll-behavior:auto;overscroll-behavior-y:none}
+html.page-snap main>[data-snap]{min-height:100dvh;display:flex;flex-direction:column;justify-content:flex-start;padding-top:calc(var(--hdr) + 36px);padding-bottom:28px;box-sizing:border-box}
+html.page-snap main>[aria-label="At a glance"]{justify-content:space-between;max-width:none;width:100%;padding-top:calc(var(--hdr) + 14px);padding-bottom:18px;gap:18px}
+html.page-snap .glance .reel{height:clamp(132px,20vh,228px)}
+html.page-snap main>[aria-labelledby="clips-h"]{justify-content:center;padding-top:var(--hdr);padding-bottom:32px;max-width:min(1760px,100%);padding-inline:28px}
+html.page-snap main>[aria-labelledby="clips-h"]>.grid{align-items:start;width:100%}
+#clips-h{align-self:start;margin-top:-120px}
+[aria-labelledby="clips-h"] .clips{grid-column:1/-1;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;width:100%;align-items:start}
+[aria-labelledby="clips-h"] .clips .frame.f916{width:100%;height:auto;max-height:none;aspect-ratio:9/16}
+@media (max-width:760px){
+[aria-labelledby="clips-h"] .clips{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+}
+html.page-snap #contact{justify-content:center}
+html.page-snap main>.hero{min-height:calc(100dvh - var(--hdr));padding-top:28px;padding-bottom:20px}
+html.page-snap .hero .grid{align-items:center;width:100%}
+html.page-snap .hero-r{align-items:flex-end}
+html.page-snap .hero-stage{width:min(100%,calc((100dvh - 180px) * 9 / 16))}
+html.page-snap .hero-name{font-size:clamp(64px,10vw,156px);margin-top:16px}
+html.page-snap .hero .f916{width:100%;max-width:none;height:auto;max-height:none}
+html.page-snap #work{padding-top:0;max-width:none;width:100%;padding-inline:clamp(28px,3vw,56px)}
+html.page-snap .work-page .row{width:100%;margin-inline:0}
+html.page-snap .work{gap:0}
+html.page-snap .work-page{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:calc(var(--hdr) + 16px) 0 24px;box-sizing:border-box}
+html.page-snap .work-page .sec-head{margin-bottom:0}
+html.page-snap .work-page .row{align-items:center;width:100%}
+html.page-snap .work-page .f916{width:min(100%,calc((100dvh - 160px) * 9 / 16));max-width:none;height:auto;max-height:none}
+html.page-snap .work-page:has(.sec-head) .f916{width:min(100%,calc((100dvh - 270px) * 9 / 16))}
+html.page-snap .row.l .f916{justify-self:start;margin-left:clamp(28px,3vw,64px)}
+html.page-snap .row.r .f916{justify-self:end;margin-right:clamp(28px,3vw,64px)}
+html.page-snap main>[aria-labelledby="outros-h"]{min-height:0;padding-top:88px;padding-bottom:72px}
+html.page-snap .band{padding-block:8px 0;background:transparent;border:0}
+html.page-snap [aria-labelledby="outros-h"]{background:var(--surface)}
+html.page-snap .strip li{display:flex;flex-direction:column;align-items:center}
+html.page-snap .strip .f916{width:min(100%,calc(58vh * 9 / 16));height:auto;aspect-ratio:9/16;max-height:none}
+html.page-snap #contact .huge{margin-top:20px;font-size:clamp(40px,6vw,92px)}
+html.page-snap #contact .contact-g{margin-top:36px}
+html.page-snap #contact .ftr{margin-top:36px;padding-bottom:0}
+
 /* ---------- Lightbox ---------- */
 .lb{position:fixed;inset:0;z-index:80;background:rgba(11,11,12,.42);backdrop-filter:blur(10px);display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility 0s .4s}
 .lb.open{opacity:1;visibility:visible;transition:opacity .4s var(--ease)}
@@ -329,6 +393,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--text);outline-offse
 .stats li:nth-child(odd)::before{display:none}
 .stats li:nth-child(n+3){border-top:1px solid var(--line)}
 .stat-n{font-size:44px}
+.reel{height:88px}
+.glance.sec{padding-top:24px}
+.glance-tl{gap:10px;margin-top:20px}
 .brands{line-height:1.8;gap:4px 16px}
 .sec-head{margin-bottom:48px;row-gap:16px}
 .work{gap:96px}
@@ -395,7 +462,8 @@ html.has-cur :is(.hero-scrub,.lb-scrub){cursor:ew-resize!important}
 <script>
 /* Skip the intro slate on repeat visits in the same tab, and for reduced motion */
 (function(){var skip=false;try{skip=sessionStorage.getItem('rv-slate')==='1'}catch(e){}
-if(skip||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('no-slate')})();
+if(skip||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('no-slate');
+if(matchMedia('(min-width:900px) and (prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('page-snap')})();
 </script>
 <div class="cur" id="cur" aria-hidden="true"><span class="cur-box"></span><span class="cur-dot"></span></div>
 
@@ -439,7 +507,7 @@ if(skip||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documen
 
 <main>
   <!-- HERO -->
-  <section class="wrap hero" id="top">
+  <section class="wrap hero" id="top" data-snap>
     <div class="grid">
       <div class="c1-8 hero-l">
         <div>
@@ -471,9 +539,18 @@ if(skip||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documen
   </section>
 
   <!-- STATS -->
-  <section class="wrap sec" aria-label="At a glance">
-    <ul class="stats" id="stats" data-reveal></ul>
-    <p class="mono brands" data-reveal="fade"><span class="m">Brands I've cut for —</span><span id="brands"></span></p>
+  <section class="sec glance" aria-label="At a glance" data-snap>
+    <div class="reel reel-top" aria-hidden="true"><div class="reel-track" id="reelTop"></div></div>
+    <div class="wrap glance-core">
+      <ul class="stats" id="stats" data-reveal></ul>
+      <div class="glance-tl" aria-hidden="true">
+        <span class="mono rec"><i></i>Live cut</span>
+        <span class="glance-line"><span></span></span>
+        <span class="mono glance-tc" id="glanceTc">00:00:00:00</span>
+      </div>
+      <p class="mono brands" data-reveal="fade"><span class="m">Brands I've cut for —</span><span id="brands"></span></p>
+    </div>
+    <div class="reel reel-bot" aria-hidden="true"><div class="reel-track" id="reelBot"></div></div>
   </section>
 
   <!-- WORK -->
@@ -486,7 +563,7 @@ if(skip||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documen
   </section>
 
   <!-- MORE CLIPS -->
-  <section class="wrap sec" aria-labelledby="clips-h">
+  <section class="wrap sec" aria-labelledby="clips-h" data-snap>
     <div class="grid">
       <h2 class="mono m c1-3" id="clips-h" data-reveal="fade">02 — More clips</h2>
       <ul class="c4-12 clips stag" id="clipList" data-reveal></ul>
@@ -494,7 +571,7 @@ if(skip||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documen
   </section>
 
   <!-- OUTROS -->
-  <section class="sec" aria-labelledby="outros-h">
+  <section class="sec" aria-labelledby="outros-h" data-snap>
     <div class="band">
       <div class="wrap">
         <div class="grid sec-head" data-reveal>
@@ -507,7 +584,7 @@ if(skip||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documen
   </section>
 
   <!-- SERVICES -->
-  <section class="wrap sec" id="services" aria-labelledby="svc-h">
+  <section class="wrap sec" id="services" aria-labelledby="svc-h" data-snap>
     <div class="grid">
       <h2 class="mono m c1-3 svc-lbl" id="svc-h" data-reveal="fade">04 — Services</h2>
       <ol class="c4-12 svc stag" id="svcList" data-reveal></ol>
@@ -516,7 +593,7 @@ if(skip||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documen
   </section>
 
   <!-- ABOUT -->
-  <section class="wrap sec" id="about" aria-labelledby="about-h">
+  <section class="wrap sec" id="about" aria-labelledby="about-h" data-snap>
     <div class="grid">
       <h2 class="mono m c1-12 lbl" id="about-h" data-reveal="fade">05 — About</h2>
       <figure class="c1-4 portrait" data-reveal="fade">
@@ -537,7 +614,7 @@ if(skip||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documen
   </section>
 
   <!-- CONTACT -->
-  <section class="wrap sec" id="contact" aria-labelledby="contact-h">
+  <section class="wrap sec" id="contact" aria-labelledby="contact-h" data-snap>
     <h2 class="mono m" id="contact-h" data-reveal="fade">06 — Contact</h2>
     <p class="d huge cut" data-reveal aria-label="Let's cut something great.">
       <span class="cl" aria-hidden="true"><span class="h t">Let's cut</span><span class="h b">Let's cut</span></span>
@@ -736,6 +813,43 @@ function countStats() {
   requestAnimationFrame(tick);
 }
 $("#brands").innerHTML = CONFIG.brands.map((b) => `<b>${esc(b)}</b>`).join(" · ");
+const REEL_FRAMES = [
+  "assets/img/picks/V_(13-11-2025)_ADIZ.jpg",
+  "assets/img/picks/01SKU.jpg",
+  "assets/img/picks/V_(10-06-2026)Adiz_spaces.jpg",
+  "assets/img/picks/V_(27-10-2026)STYLEFIT.jpg",
+  "assets/img/picks/V_(28-10-2026)Ai_baby_halloween.jpg",
+  "assets/img/picks/02SKU.jpg",
+  "assets/img/picks/04SKU.jpg",
+  "assets/img/picks/01ADIZ SPACES.jpg",
+  "assets/img/picks/V_(17-08-2026)StyleFit 3.jpg",
+  "assets/img/picks/V_(04-08-2026)AI_BABY.jpg",
+  "assets/img/picks/V_(28-04-2026).jpg",
+  "assets/img/picks/V_(10-02-2026).jpg",
+];
+function reelSet(list) {
+  return `<div class="reel-set">${list.map((src) => `<span class="reel-frame"><img src="${enc(src)}" alt="" draggable="false"></span>`).join("")}</div>`;
+}
+const reelTop = $("#reelTop"), reelBot = $("#reelBot");
+if (reelTop && reelBot) {
+  reelTop.innerHTML = reelSet(REEL_FRAMES) + reelSet(REEL_FRAMES);
+  reelBot.innerHTML = reelSet([...REEL_FRAMES].reverse()) + reelSet([...REEL_FRAMES].reverse());
+  reelTop.insertAdjacentHTML("afterend", `<span class="reel-play"></span>`);
+}
+const glanceTc = $("#glanceTc");
+if (glanceTc && !REDUCED) {
+  let t = 4.08, last = 0, glanceOn = false;
+  const tickGlance = (now) => {
+    if (glanceOn) {
+      t += last ? (now - last) / 1000 : 0;
+      last = now;
+      glanceTc.textContent = tc(t);
+    } else last = 0;
+    requestAnimationFrame(tickGlance);
+  };
+  requestAnimationFrame(tickGlance);
+  new IntersectionObserver(([en]) => { glanceOn = en.isIntersecting; }, { threshold: 0.35 }).observe(glanceTc.closest(".glance"));
+}
 $("#tools").innerHTML = CONFIG.tools.map((t) => `<span class="t">${esc(t)}</span>`).join(" · ");
 
 function posterFor(media, fallback) {
@@ -748,7 +862,7 @@ $("#workList").innerHTML = CONFIG.work.map((p, i) => {
   const idx = addToPlaylist({ title: `${p.name} · ${p.cat}`, media: p.media, drive: p.drive });
   const meta = [["Role", p.role], ["Year", p.year, 1], ["Duration", p.dur, 1], ["Platform", p.platform]]
     .filter((m) => m[1]).map((m) => `<div><dt class="mono m">${m[0]}</dt><dd${m[2] ? ' class="mono"' : ""}>${esc(m[1])}</dd></div>`).join("");
-  return `<li class="grid row ${i % 2 ? "r" : "l"}" data-reveal>
+  return `<li class="work-page" data-snap><div class="grid row ${i % 2 ? "r" : "l"}" data-reveal>
     <div class="row-v">
       <button class="frame f916" data-lb="${idx}" data-video="${esc(p.preview)}" aria-label="Play ${esc(p.name)}, ${esc(p.cat)}">
         ${posterFor(p.media, p.preview)}
@@ -768,8 +882,13 @@ $("#workList").innerHTML = CONFIG.work.map((p, i) => {
         <a class="lk watch" href="${esc(p.drive)}" target="_blank" rel="noopener noreferrer">Watch →</a>
       </div>
     </div>
-  </li>`;
+  </div></li>`;
 }).join("");
+const workHead = $("#work .sec-head");
+const firstWork = $("#workList .work-page");
+if (workHead && firstWork) firstWork.prepend(workHead);
+const contactSec = $("#contact");
+if (contactSec && $(".ftr")) contactSec.append($(".ftr"));
 
 $("#outroList").innerHTML = CONFIG.outros.map((o, i) => {
   const idx = addToPlaylist({ title: o.label, media: { kind: "mp4", src: o.file, vertical: true } });
@@ -829,16 +948,79 @@ $$(".ln", heroName).forEach((ln) => {
    Smooth scroll (Lenis) + anchors
    ============================================================ */
 let lenis = null;
-if (!REDUCED && window.Lenis) {
+const snapMq = matchMedia("(min-width: 900px) and (prefers-reduced-motion: no-preference)");
+function startLenis() {
+  if (lenis || REDUCED || !window.Lenis || snapMq.matches) return;
   lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1 });
-  const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+  const raf = (t) => { if (!lenis) return; lenis.raf(t); requestAnimationFrame(raf); };
   requestAnimationFrame(raf);
 }
+function stopLenis() {
+  if (!lenis) return;
+  lenis.destroy();
+  lenis = null;
+}
+function syncSnapMode() {
+  document.documentElement.classList.toggle("page-snap", snapMq.matches);
+  if (snapMq.matches) stopLenis();
+  else startLenis();
+}
+syncSnapMode();
+snapMq.addEventListener("change", syncSnapMode);
+
+const snapPanels = () => $$("[data-snap]");
+const snapTop = (el, i) => i === 0 ? 0 : Math.round(el.getBoundingClientRect().top + window.scrollY);
+let snapLock = 0;
+function snapIndex() {
+  const panels = snapPanels();
+  const y = window.scrollY + 12;
+  let i = 0;
+  panels.forEach((p, idx) => { if (snapTop(p, idx) <= y) i = idx; });
+  return i;
+}
+function goSnap(index) {
+  const panels = snapPanels();
+  if (!panels.length) return;
+  const i = index < 0 ? panels.length - 1 : Math.max(0, Math.min(panels.length - 1, index));
+  snapLock = performance.now() + 980;
+  window.scrollTo({ top: snapTop(panels[i], i), behavior: REDUCED ? "auto" : "smooth" });
+}
+function stepSnap(dir) {
+  if (performance.now() < snapLock) return;
+  const panels = snapPanels();
+  const i = snapIndex();
+  const next = i + dir;
+  if (next < 0 || next >= panels.length) return;
+  goSnap(next);
+}
+let snapAcc = 0, snapQuiet;
+addEventListener("wheel", (e) => {
+  if (!snapMq.matches || e.ctrlKey) return;
+  if ($("#lb").classList.contains("open")) return;
+  e.preventDefault();
+  if (document.body.classList.contains("menu-open")) return;
+  if (performance.now() < snapLock) return;
+  if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+  const raw = e.deltaY;
+  const px = e.deltaMode === 1 ? raw * 16 : e.deltaMode === 2 ? raw * innerHeight : raw;
+  snapAcc += px;
+  clearTimeout(snapQuiet);
+  snapQuiet = setTimeout(() => { snapAcc = 0; }, 150);
+  if (Math.abs(snapAcc) < 36) return;
+  const dir = snapAcc > 0 ? 1 : -1;
+  snapAcc = 0;
+  stepSnap(dir);
+}, { passive: false });
+
 const scrollToHash = (hash) => {
-  const target = hash === "#top" ? 0 : $(hash);
-  if (target === null) return;
-  if (lenis) lenis.scrollTo(target, { offset: target === 0 ? 0 : -(parseInt(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) + 16), duration: 1.4 });
-  else (target === 0 ? window.scrollTo({ top: 0 }) : target.scrollIntoView());
+  const target = hash === "#top" ? $("#top") : $(hash);
+  if (!target) return;
+  if (snapMq.matches) {
+    const panel = target.matches("[data-snap]") ? target : (target.querySelector("[data-snap]") || target.closest("[data-snap]"));
+    if (panel) { goSnap(snapPanels().indexOf(panel)); return; }
+  }
+  if (lenis) lenis.scrollTo(hash === "#top" ? 0 : target, { offset: hash === "#top" ? 0 : -(parseInt(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) + 16), duration: 1.4 });
+  else (hash === "#top" ? window.scrollTo({ top: 0 }) : target.scrollIntoView());
 };
 document.addEventListener("click", (e) => {
   const a = e.target.closest('a[href^="#"]');
@@ -857,7 +1039,8 @@ function onScroll() {
   const y = window.scrollY, max = document.documentElement.scrollHeight - innerHeight;
   prog.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
   const down = y > lastY && y > 240;
-  if (!document.body.classList.contains("menu-open")) hdr.classList.toggle("hide", down);
+  if (document.documentElement.classList.contains("page-snap")) hdr.classList.remove("hide");
+  else if (!document.body.classList.contains("menu-open")) hdr.classList.toggle("hide", down);
   fab.classList.toggle("away", y > max - 400);
   lastY = y; ticking = false;
 }
@@ -1204,7 +1387,20 @@ document.addEventListener("wheel", (e) => {
 }, { passive: false, capture: true });
 lb.addEventListener("click", (e) => { if (e.target === lb || e.target.classList.contains("lb-stage")) closeLb(); });
 addEventListener("keydown", (e) => {
-  if (!lbOpen) { if (e.key === "Escape") closeMenu(); return; }
+  if (!lbOpen) {
+    if (snapMq.matches && !e.metaKey && !e.ctrlKey && !e.altKey && !document.body.classList.contains("menu-open")) {
+      const tag = (e.target.tagName || "").toLowerCase();
+      const typing = tag === "input" || tag === "textarea" || e.target.isContentEditable;
+      if (!typing) {
+        if (e.key === "ArrowDown" || e.key === "PageDown" || (e.key === " " && tag !== "button" && tag !== "a")) { e.preventDefault(); stepSnap(1); return; }
+        if (e.key === "ArrowUp" || e.key === "PageUp") { e.preventDefault(); stepSnap(-1); return; }
+        if (e.key === "Home") { e.preventDefault(); goSnap(0); return; }
+        if (e.key === "End") { e.preventDefault(); goSnap(-1); return; }
+      }
+    }
+    if (e.key === "Escape") closeMenu();
+    return;
+  }
   if (e.key === "Escape") closeLb();
   if (e.key === "ArrowRight") stepLb(1);
   if (e.key === "ArrowLeft") stepLb(-1);
